@@ -13,12 +13,16 @@ use Scalar::Util qw(blessed);
 
 use vars qw(@EXPORT_OK $VERSION $OverridedNowForTesting);
 
-$VERSION = "1.00";
+$VERSION = "1.01";
 
 my $tester = Test::Builder->new();
 
 sub occured_within_ago($$) {
-	my $time = datetime(shift);
+	my $value = shift;
+	return unless defined $value;
+
+	my $time = datetime($value);
+	return unless defined $time;
 
 	my $duration = shift;
 	unless (blessed $duration && $duration->isa("DateTime::Duration")) {
